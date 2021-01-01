@@ -1,4 +1,4 @@
-#DROP DATABASE HFB;
+DROP DATABASE HFB;
 
 CREATE DATABASE HFB;
 
@@ -32,7 +32,7 @@ CREATE TABLE Users(
     `UserType` VARCHAR(20) NOT NULL DEFAULT('noraml'),
     `UserPic` VARCHAR(100) NOT NULL DEFAULT("UserDefault.jpg"),
     `IsOnline` BOOLEAN NOT NULL DEFAULT(0),
-    Locked BOOLEAN NOT NULL DEFAULT(0)
+    IsLocked BOOLEAN NOT NULL DEFAULT(0)
 )ENGINE = InnoDB;
 
 CREATE TABLE Friends(
@@ -51,8 +51,8 @@ CREATE TABLE GamesHistory(
     `GEnded` VARCHAR(30) NOT NULL DEFAULT (''), #just untill we update that time
     `GState` BOOLEAN NOT NULL DEFAULT (1),
     PRIMARY KEY (`UserName`, `GID`, `GStarted`, `GEnded`),
-    CONSTRAINT `FK_UGHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`),
-    CONSTRAINT `FK_UGHistory_2` FOREIGN KEY (`GID`)REFERENCES `Game` (`GID`)
+    CONSTRAINT `FK_UGHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_UGHistory_2` FOREIGN KEY (`GID`)REFERENCES `Game` (`GID`) ON DELETE CASCADE
 )ENGINE = InnoDB;
 
 CREATE TABLE ProgramsHistory(
@@ -62,8 +62,8 @@ CREATE TABLE ProgramsHistory(
     `PEnded` VARCHAR(30) NOT NULL DEFAULT (''), #just untill we update that time
     `PState` BOOLEAN NOT NULL DEFAULT (1),
     PRIMARY KEY (`UserName`, `PID`, `PStarted`, `PEnded`),
-    CONSTRAINT `FK_UPHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`),
-    CONSTRAINT `FK_UPHistory_2` FOREIGN KEY (`PID`)REFERENCES `Program` (`PID`)
+    CONSTRAINT `FK_UPHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_UPHistory_2` FOREIGN KEY (`PID`)REFERENCES `Program` (`PID`) ON DELETE CASCADE
 )ENGINE = InnoDB;
 
 CREATE TABLE Administrators(
@@ -113,5 +113,14 @@ INSERT INTO Administrators(USERNAME,PASSWORD) VALUES
     ('admin','0000'),
     ('omar','1234');
 
+INSERT INTO Users(UserName,FirstName,LastName,Email,HashedPassword) VALUES
+    ('meryacine','omar','yacine','omar.yacine@gmail.com','passy'),
+    ('mario','omar','fattah','omar.yacine@yahoo.com','passy');
 
+INSERT INTO ProgramsHistory(UserName,PID) VALUES
+    ('meryacine',3),
+    ('mario',4);
 
+INSERT INTO GamesHistory(UserName,GID) VALUES
+    ('meryacine',1),
+    ('mario',12);

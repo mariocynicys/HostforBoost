@@ -126,9 +126,9 @@ def admin_control():
     except:
         return
     clear_window(window)
-    window.geometry("370x470")
+    window.geometry("400x470")
     
-    add_remove_admin_button = ttk.Button(window,text="Update-Password/Add/Remove Admin",command=add_remove_admin,)
+    add_remove_admin_button = ttk.Button(window,text="Update-Password/Add/Remove/View Admin",command=add_remove_admin,)
     add_remove_admin_button.bind("<Return>",add_remove_admin)
     add_remove_admin_button.grid(row=0,column=0,padx=(50,0),pady=(40,0))
     
@@ -152,10 +152,9 @@ def admin_control():
     control_users_button.bind("<Return>",control_users)
     control_users_button.grid(row=5,column=0,padx=(50,0),pady=(40,0))
     
-
 def add_remove_admin(_ = 0):
     subwindow = Toplevel(window)
-    subwindow.title("Add/Remove Admin")
+    subwindow.title("Add/Remove/View Admin")
     subwindow.geometry("450x220+400+200")
     
     username_label = ttk.Label(subwindow,text="Username : ")
@@ -187,6 +186,11 @@ def add_remove_admin(_ = 0):
     change_button = ttk.Button(subwindow,text="Change Password",command=change_admin_lam,)
     change_button.bind("<Return>",change_admin_lam)
     change_button.grid(row=3,column=0,pady=(20,0),padx=(70,0))
+    
+    view_admin_lam = lambda dump=0 : view_admin()
+    view_button = ttk.Button(subwindow,text="View Admins",command=view_admin_lam,state=is_sudo())
+    view_button.bind("<Return>",view_admin_lam)
+    view_button.grid(row=3,column=1,pady=(20,0),)
     
 def view_game_history(_ = 0):
     try:
@@ -276,7 +280,7 @@ def view_program_history(_ = 0):
     for i in range(len(history_list)):
         programname="-UNKNOWN-"
         try:
-            program = session.query(Program).filter_by(gid=history_list[i].gid).first()
+            program = session.query(Program).filter_by(pid=history_list[i].pid).first()
             programname = program.pname
         except:
             session.rollback()
@@ -290,7 +294,7 @@ def view_program_history(_ = 0):
     
 def control_games(_ = 0):
     try:
-        game_list = session.query(Game).all()
+        game_list = session.query(Game).order_by(Game.gid.asc()).all()
     except:
         messagebox.showerror("Error","Couldn't Fetch The Game Table From The DB")
         session.rollback()
@@ -335,7 +339,7 @@ def control_games(_ = 0):
 
 def control_programs(_ = 0):
     try:
-        program_list = session.query(Program).all()
+        program_list = session.query(Program).order_by(Program.pid.asc()).all()
     except:
         messagebox.showerror("Error","Couldn't Fetch The Programs Table From The DB")
         session.rollback()
@@ -376,7 +380,7 @@ def control_programs(_ = 0):
 
 def control_users(_ = 0):
     try:
-        user_list = session.query(User).all()
+        user_list = session.query(User).order_by(User.username.asc()).all()
     except:
         messagebox.showerror("Error","Couldn't Fetch The Users Table From The DB")
         session.rollback()
@@ -402,11 +406,11 @@ def control_users(_ = 0):
     canvas.pack(side="left", fill="both", expand=True)
     
     ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="User Full Name").grid(row=0,column=1,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="User Email").grid(row=0,column=2,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="User Type").grid(row=0,column=3,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="User Online").grid(row=0,column=4,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="User Locked").grid(row=0,column=5,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="Full Name").grid(row=0,column=1,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="Email").grid(row=0,column=2,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="Type").grid(row=0,column=3,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="Online").grid(row=0,column=4,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="Locked").grid(row=0,column=5,ipadx=1,ipady=1)
     ttk.Label(scrollable_frame,text="UserName").grid(row=0,column=6,ipadx=1,ipady=1)
     
     for i in range(len(user_list)):
@@ -490,8 +494,44 @@ def add_admin(username,password):
         messagebox.showinfo("Success","Admin {} Has Been Added Successfully".format(admin_ins.username))
         logger("Added","Admin:[{}]".format(admin_ins.username))
     except:
-        messagebox.showerror("Error","Couldn't Add Admin To The DB")
+        messagebox.showerror("Error","Couldn't Add Admin {} To The DB".format(username))
         session.rollback()
+
+def view_admin():
+    try:
+        admin_list = [session.query(Admin).filter_by(username='admin').first()]
+        admin_list += session.query(Admin).filter(Admin.username!='admin').all()
+    except:
+        messagebox.showerror("Error","Couldn't Fetch The Admins' Table From The DB")
+        session.rollback()
+        return
+    
+    subwindow = Toplevel(window)
+    subwindow.title("Admins")
+    subwindow.geometry("450x600+400+200")
+
+    canvas = Canvas(subwindow)
+    scrollable_frame = Frame(canvas)
+    scrollable_frame.bind("<Configure>",lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+    canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+    
+    scrollbary = Scrollbar(subwindow, orient="vertical", command=canvas.yview)
+    scrollbarx = Scrollbar(subwindow, orient="horizontal", command=canvas.xview)
+    
+    canvas.configure(xscrollcommand=scrollbarx.set)
+    canvas.configure(yscrollcommand=scrollbary.set)
+    
+    scrollbary.pack(side="right", fill="y")
+    scrollbarx.pack(side="bottom",fill="x")
+    canvas.pack(side="left", fill="both", expand=True)
+    
+    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="UserName").grid(row=0,column=1,ipadx=1,ipady=1)
+    
+    for i in range(len(admin_list)):
+        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=1,ipady=1)
+        ttk.Label(scrollable_frame,text=admin_list[i].username,).grid(row=i+1,column=1,ipadx=1,ipady=1)
+        ttk.Button(scrollable_frame,text="Remove",command=lambda username=admin_list[i].username: remove_admin(username)).grid(row=i+1,column=7,ipadx=1,ipady=1)
 
 def remove_admin(username):
     if username=='admin':
@@ -504,7 +544,7 @@ def remove_admin(username):
         messagebox.showinfo("Success","Admin {} Has Been Removed Successfully".format(admin_ins.username))
         logger("Removed","Admin:[{}]".format(admin_ins.username))
     except:
-        messagebox.showerror("Error","Couldn't Remove Admin From The DB")
+        messagebox.showerror("Error","Couldn't Remove Admin {} From The DB".format(username))
         session.rollback()
 
 def change_admin(username,password):
@@ -515,7 +555,7 @@ def change_admin(username,password):
         messagebox.showinfo("Success","Admin {}'s Passwrod Has Been Updated Successfully".format(admin_ins.username))
         logger("Changed",'Password For Admin:[{}]'.format(admin_ins.username))
     except:
-        messagebox.showerror("Error","Couldn't Change Admin's Password From The DB")
+        messagebox.showerror("Error","Couldn't Change {}'s Password".format(username))
         session.rollback()
 
 def check_admin(username,password,engine):
