@@ -214,13 +214,13 @@ def view_game_history(_ = 0):
     scrollbarx.pack(side="bottom",fill="x")
     canvas.pack(side="left", fill="both", expand=True)
     
-    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="User Name").grid(row=0,column=1,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game ID").grid(row=0,column=2,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Name").grid(row=0,column=3,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game State").grid(row=0,column=4,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=5,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=6,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="User Name").grid(row=0,column=1,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game ID").grid(row=0,column=2,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Name").grid(row=0,column=3,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game State").grid(row=0,column=4,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=5,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=6,ipadx=5,ipady=1)
     
     for i in range(len(history_list)):
         gamename="-UNKNOWN-"
@@ -229,13 +229,13 @@ def view_game_history(_ = 0):
             gamename = game.gname
         except:
             session.rollback()
-        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].username,).grid(row=i+1,column=1,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].gid,).grid(row=i+1,column=2,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=gamename,).grid(row=i+1,column=3,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].gstate,).grid(row=i+1,column=4,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].gstart,).grid(row=i+1,column=5,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].gend,).grid(row=i+1,column=6,ipadx=1,ipady=1)
+        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].username,).grid(row=i+1,column=1,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].gid,).grid(row=i+1,column=2,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=gamename,).grid(row=i+1,column=3,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].gstate,).grid(row=i+1,column=4,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].gstart,).grid(row=i+1,column=5,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].gend,).grid(row=i+1,column=6,ipadx=5,ipady=1)
         
 def view_program_history(_ = 0):
     try:
@@ -264,13 +264,13 @@ def view_program_history(_ = 0):
     scrollbarx.pack(side="bottom",fill="x")
     canvas.pack(side="left", fill="both", expand=True)
     
-    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="User Name").grid(row=0,column=1,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Program ID").grid(row=0,column=2,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Program Name").grid(row=0,column=3,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Program State").grid(row=0,column=4,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=5,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=6,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="User Name").grid(row=0,column=1,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program ID").grid(row=0,column=2,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program Name").grid(row=0,column=3,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program State").grid(row=0,column=4,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=5,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=6,ipadx=5,ipady=1)
     
     for i in range(len(history_list)):
         programname="-UNKNOWN-"
@@ -279,13 +279,13 @@ def view_program_history(_ = 0):
             programname = program.pname
         except:
             session.rollback()
-        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].username,).grid(row=i+1,column=1,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].pid,).grid(row=i+1,column=2,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=programname,).grid(row=i+1,column=3,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].pstate,).grid(row=i+1,column=4,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].pstart,).grid(row=i+1,column=5,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].pend,).grid(row=i+1,column=6,ipadx=1,ipady=1)
+        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].username,).grid(row=i+1,column=1,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].pid,).grid(row=i+1,column=2,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=programname,).grid(row=i+1,column=3,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].pstate,).grid(row=i+1,column=4,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].pstart,).grid(row=i+1,column=5,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].pend,).grid(row=i+1,column=6,ipadx=5,ipady=1)
     
 def control_games(_ = 0):
     try:
@@ -314,22 +314,22 @@ def control_games(_ = 0):
     scrollbarx.pack(side="bottom",fill="x")
     canvas.pack(side="left", fill="both", expand=True)
     
-    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Name").grid(row=0,column=1,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Publisher").grid(row=0,column=2,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Rate").grid(row=0,column=3,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Genre").grid(row=0,column=4,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Release Date").grid(row=0,column=5,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Game ID").grid(row=0,column=6,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Name").grid(row=0,column=1,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Publisher").grid(row=0,column=2,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Rate").grid(row=0,column=3,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Genre").grid(row=0,column=4,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Release Date").grid(row=0,column=5,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game ID").grid(row=0,column=6,ipadx=5,ipady=1)
     
     for i in range(len(game_list)):
-        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].gname).grid(row=i+1,column=1,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].gpublisher).grid(row=i+1,column=2,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].grate).grid(row=i+1,column=3,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].ggenre).grid(row=i+1,column=4,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].greleaseddate).grid(row=i+1,column=5,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].gid).grid(row=i+1,column=6,ipadx=1,ipady=1)
+        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].gname).grid(row=i+1,column=1,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].gpublisher).grid(row=i+1,column=2,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].grate).grid(row=i+1,column=3,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].ggenre).grid(row=i+1,column=4,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].greleaseddate).grid(row=i+1,column=5,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].gid).grid(row=i+1,column=6,ipadx=5,ipady=1)
         ttk.Button(scrollable_frame,text="Remove",command=lambda gid=game_list[i].gid: remove_game(gid)).grid(row=i+1,column=7,ipadx=1,ipady=1)
 
 def control_programs(_ = 0):
@@ -359,18 +359,18 @@ def control_programs(_ = 0):
     scrollbarx.pack(side="bottom",fill="x")
     canvas.pack(side="left", fill="both", expand=True)
     
-    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Program Name").grid(row=0,column=1,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Program Publisher").grid(row=0,column=2,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Program Release Date").grid(row=0,column=5,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Program ID").grid(row=0,column=6,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program Name").grid(row=0,column=1,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program Publisher").grid(row=0,column=2,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program Release Date").grid(row=0,column=5,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program ID").grid(row=0,column=6,ipadx=5,ipady=1)
     
     for i in range(len(program_list)):
-        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=program_list[i].pname).grid(row=i+1,column=1,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=program_list[i].ppublisher).grid(row=i+1,column=2,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=program_list[i].preleaseddate).grid(row=i+1,column=5,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=program_list[i].pid).grid(row=i+1,column=6,ipadx=1,ipady=1)
+        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=program_list[i].pname).grid(row=i+1,column=1,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=program_list[i].ppublisher).grid(row=i+1,column=2,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=program_list[i].preleaseddate).grid(row=i+1,column=5,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=program_list[i].pid).grid(row=i+1,column=6,ipadx=5,ipady=1)
         ttk.Button(scrollable_frame,text="Remove",command=lambda pid=program_list[i].pid: remove_program(pid)).grid(row=i+1,column=7,ipadx=1,ipady=1)
 
 def control_users(_ = 0):
@@ -400,22 +400,22 @@ def control_users(_ = 0):
     scrollbarx.pack(side="bottom",fill="x")
     canvas.pack(side="left", fill="both", expand=True)
     
-    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Full Name").grid(row=0,column=1,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Email").grid(row=0,column=2,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Type").grid(row=0,column=3,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Online").grid(row=0,column=4,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="Locked").grid(row=0,column=5,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="UserName").grid(row=0,column=6,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Full Name").grid(row=0,column=1,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Email").grid(row=0,column=2,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Type").grid(row=0,column=3,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Online").grid(row=0,column=4,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Locked").grid(row=0,column=5,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="UserName").grid(row=0,column=6,ipadx=5,ipady=1)
     
     for i in range(len(user_list)):
-        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=user_list[i].firstname+' '+user_list[i].lastname).grid(row=i+1,column=1,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=user_list[i].email).grid(row=i+1,column=2,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=user_list[i].usertype).grid(row=i+1,column=3,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=user_list[i].isonline).grid(row=i+1,column=4,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=user_list[i].islocked).grid(row=i+1,column=5,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=user_list[i].username).grid(row=i+1,column=6,ipadx=1,ipady=1)
+        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=user_list[i].firstname+' '+user_list[i].lastname).grid(row=i+1,column=1,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=user_list[i].email).grid(row=i+1,column=2,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=user_list[i].usertype).grid(row=i+1,column=3,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=user_list[i].isonline).grid(row=i+1,column=4,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=user_list[i].islocked).grid(row=i+1,column=5,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=user_list[i].username).grid(row=i+1,column=6,ipadx=5,ipady=1)
         ttk.Button(scrollable_frame,text="Lock",command=lambda username=user_list[i].username : lock_user(username),state='disabled' if user_list[i].islocked else 'normal').grid(row=i+1,column=7,ipadx=1,ipady=1)
         ttk.Button(scrollable_frame,text="Unlock",command=lambda username=user_list[i].username : unlock_user(username),state='normal' if user_list[i].islocked else 'disabled').grid(row=i+1,column=8,ipadx=1,ipady=1)
         ttk.Button(scrollable_frame,text="Remove",command=lambda username=user_list[i].username : remove_user(username)).grid(row=i+1,column=9,ipadx=1,ipady=1)
@@ -520,12 +520,12 @@ def view_admin():
     scrollbarx.pack(side="bottom",fill="x")
     canvas.pack(side="left", fill="both", expand=True)
     
-    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=1,ipady=1)
-    ttk.Label(scrollable_frame,text="UserName").grid(row=0,column=1,ipadx=1,ipady=1)
+    ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="UserName").grid(row=0,column=1,ipadx=5,ipady=1)
     
     for i in range(len(admin_list)):
-        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=1,ipady=1)
-        ttk.Label(scrollable_frame,text=admin_list[i].username,).grid(row=i+1,column=1,ipadx=1,ipady=1)
+        ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=admin_list[i].username,).grid(row=i+1,column=1,ipadx=5,ipady=1)
         ttk.Button(scrollable_frame,text="Remove",command=lambda username=admin_list[i].username: remove_admin(username)).grid(row=i+1,column=7,ipadx=1,ipady=1)
 
 def remove_admin(username):

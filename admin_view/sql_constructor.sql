@@ -29,7 +29,7 @@ CREATE TABLE Users(
     `LastName` VARCHAR(20) NOT NULL,
     `Email` VARCHAR(100) NOT NULL UNIQUE,
     `HashedPassword` VARCHAR(255) NOT NULL,
-    `UserType` VARCHAR(20) NOT NULL DEFAULT('noraml'),
+    `UserType` VARCHAR(20) NOT NULL DEFAULT('normal'),
     `UserPic` VARCHAR(100) NOT NULL DEFAULT("UserDefault.jpg"),
     `IsOnline` BOOLEAN NOT NULL DEFAULT(0),
     IsLocked BOOLEAN NOT NULL DEFAULT(0)
