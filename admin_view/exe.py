@@ -120,11 +120,6 @@ class ProgramHistory(Base):
 
 def admin_control():
     '''meh, admin control'''
-    global session
-    try:
-        session = sessionmaker(bind=engine)()
-    except:
-        return
     clear_window(window)
     window.geometry("400x470")
     
