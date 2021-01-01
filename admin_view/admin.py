@@ -1,10 +1,22 @@
 import tkinter as ttk
-import pymysql
 from tkinter import messagebox,Tk,Toplevel,Frame,Scrollbar,Canvas
-from PIL import ImageTk,Image
-from sqlalchemy import create_engine,Integer,String,Column,DateTime,Boolean,Date,DECIMAL
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+
+try:
+    from PIL import ImageTk,Image
+except:
+    pass
+
+try:
+    import pymysql
+    from sqlalchemy import create_engine,Integer,String,Column,DateTime,Boolean,Date,DECIMAL
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy.ext.declarative import declarative_base
+except:
+    window = Tk()
+    window.title("Error")
+    window.geometry("0x0")
+    messagebox.showerror("Import Error","Please Make Sure That 'SQLAlchmey' & 'pymysql' are installed")
+    exit()
 
 Base = declarative_base()
 
