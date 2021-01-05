@@ -9,8 +9,8 @@ try:
 except:
     window = Tk()
     window.title("Error")
-    window.geometry("0x0")
-    messagebox.showerror("Import Error","Please Make Sure That 'SQLAlchmey' & 'pymysql' are installed")
+    window.withdraw()
+    messagebox.showerror("Import Error","Please Make Sure That 'SQLAlchmey' & 'pymysql' Are Installed")
     exit()
 
 Base = declarative_base()
