@@ -6,8 +6,16 @@
         $username = $_SESSION['username'];
         $password = $_SESSION['password'];
         if(make_check($username, $password) == 1){
-            header('HTTP/1.1 301 Moved Permanently');
-            header('Location: profile.php'); 
+            if($_SESSION['type'] == "normal"){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: views/normal/profile.php'); 
+            }else if($_SESSION['type'] == "program_publisher"){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: views/program_publisher/profile.php'); 
+            }else if($_SESSION['type'] == "game_publisher"){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: views/game_publisher/profile.php'); 
+            }
         }
     }
     
@@ -17,7 +25,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Register - Brand</title>
+    <title>Register - HFB</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">
@@ -45,12 +53,13 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user" type="text" id="user_name_id" placeholder="UserName" name="user_name" autocomplete="off" required="" maxlength="20" pattern="^[A-Za-z0-9 ]{1,20}$" title="Must be from 1 to 20 chracters and numbers"></div>
-                                    <div class="col-sm-6"><input class="form-control form-control-user" type="email" id="email_id" placeholder="Email" name="email" inputmode="email" autocomplete="off" required="" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="100"></div>
+                                    <div class="col-sm-6"><input class="form-control form-control-user" type="email" id="email_id" placeholder="Email" name="email" inputmode="email" autocomplete="off" required="" pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="100"></div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0"><select class="custom-select" required="" style="border-radius: 150px;border-style: solid;height: 50px;" name="user_type">
                                             <option value="normal" selected="">Normal User</option>
-                                            <option value="publisher">Publisher</option>
+                                            <option value="game_publisher">Game Publisher</option>
+                                            <option value="program_publisher">Program Publisher</option>
                                         </select></div>
                                     <div class="col-sm-6"><input class="form-control form-control-user" type="password" data-toggle="tooltip" data-bs-tooltip="" id="password_id" placeholder="Password" name="password" autocomplete="off" required="" minlength="8" maxlength="20" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"></div>
                                 </div><button class="btn btn-primary btn-block text-white btn-user" type="submit" name="register" value="register">Register Account</button>

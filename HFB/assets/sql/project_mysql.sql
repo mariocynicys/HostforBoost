@@ -5,7 +5,7 @@ CREATE TABLE `Game`(
     `GGenre` VARCHAR(80) NOT NULL DEFAULT('?'),
     `GRate` decimal(2,1) NOT NULL DEFAULT(0.0),
     `GReleasedDate` date NOT NULL,
-    `GPublisher` VARCHAR(50) NOT NULL DEFAULT('Unknown'),
+    `GPublisher` VARCHAR(80) NOT NULL DEFAULT('Unknown'),
     `GTrailer` VARCHAR(15)
 )ENGINE = InnoDB;
 
@@ -13,8 +13,8 @@ CREATE TABLE `Program`(
     `PID` INT AUTO_INCREMENT PRIMARY KEY,
     `PName` VARCHAR(20) NOT NULL UNIQUE,
     `PPoster` VARCHAR(100) NOT NULL UNIQUE DEFAULT("ProgramDefualt.jpg"),
-    `PReleasedDate` date NOT NULL,
-    `PPublisher` VARCHAR(50) NOT NULL DEFAULT('Unknown')
+    `PReleasedDate` DATE NOT NULL,
+    `PPublisher` VARCHAR(80) NOT NULL DEFAULT('Unknown')
 )ENGINE = InnoDB;
 
 CREATE TABLE Users(
@@ -26,6 +26,53 @@ CREATE TABLE Users(
     `UserType` VARCHAR(20) NOT NULL DEFAULT('noraml'),
     `UserPic` VARCHAR(100) NOT NULL DEFAULT("UserDefault.jpg"),
     `IsOnline` BOOLEAN NOT NULL DEFAULT(0)
+)ENGINE = InnoDB;
+
+CREATE TABLE Friends(
+    `UserName` VARCHAR (20) NOT NULL,
+    `FriendName` VARCHAR (20) NOT NULL,
+    PRIMARY KEY (`UserName`, `FriendName`),
+    KEY `FK_FRIENDS_2` (`FriendName`),
+    CONSTRAINT `FK_FRIENDS_1` FOREIGN KEY (`UserName`) REFERENCES `users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_FRIENDS_2` FOREIGN KEY (`FriendName`)REFERENCES `users` (`UserName`) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE TABLE GamesHistory(
+    `UserName` VARCHAR (20) NOT NULL,
+    `GID` INT NOT NULL,
+    `GStarted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `GEnded` VARCHAR(30) NOT NULL DEFAULT (''), #just untill we update that time
+    `GState` BOOLEAN NOT NULL DEFAULT (1),
+    PRIMARY KEY (`UserName`, `GID`, `GStarted`, `GEnded`),
+    CONSTRAINT `FK_UGHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_UGHistory_2` FOREIGN KEY (`GID`)REFERENCES `Game` (`GID`) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE TABLE ProgramsHistory(
+    `UserName` VARCHAR (20) NOT NULL,
+    `PID` INT NOT NULL,
+    `PStarted` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `PEnded` VARCHAR(30) NOT NULL DEFAULT (''), #just untill we update that time
+    `PState` BOOLEAN NOT NULL DEFAULT (1),
+    PRIMARY KEY (`UserName`, `PID`, `PStarted`, `PEnded`),
+    CONSTRAINT `FK_UPHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_UPHistory_2` FOREIGN KEY (`PID`)REFERENCES `Program` (`PID`) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE TABLE GamesPublishersHistory(
+    `UserName` VARCHAR (20) NOT NULL,
+    `GID` INT NOT NULL,
+    PRIMARY KEY (`UserName`, `GID`),
+    CONSTRAINT `FK_GPHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_GPHistory_2` FOREIGN KEY (`GID`)REFERENCES `Game` (`GID`) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE TABLE ProgramsPublishersHistory(
+    `UserName` VARCHAR (20) NOT NULL,
+    `PID` INT NOT NULL,
+    PRIMARY KEY (`UserName`, `PID`),
+    CONSTRAINT `FK_PPHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_PPHistory_2` FOREIGN KEY (`PID`)REFERENCES `Program` (`PID`) ON DELETE CASCADE
 )ENGINE = InnoDB;
 
 //------------------------------INSERT INTO GAME---------------------------------
@@ -45,7 +92,12 @@ INSERT INTO Game(GID, GName, GPoster, GGenre, GRate, GReleasedDate, GPublisher, 
         (13, "Doom Eternal", "DoomEternal_1x.jpg", "Action, First-person shooter", 9, "2020-03-20", "Bethesda Softworks", "FkklG9MA0vM"),
         (14, "Wolfenstein: Youngblood", "Wolfenstein__Youngblood_1x.jpg", "Action, First-person shooter", 6, "2019-07-26", "Bethesda Softworks", "SNpgKytPcc4"),
         (15, "WWE 2K Battlegrounds", "WWEbattlegrounds_1x.jpg", "Professional wrestling video game", 5.5, "2020-09-13", "2K Games, Take-Two Interactive", "ujOqTFgFnKQ"),
-        (16, "Zombie Army 4: Dead War", "Zombie_Army_4__Dead_War_1x.jpg", "Third-person shooter, Survival horror, Tactical shooter", 9, "2020-02-04", "Rebellion Developments, Game Source Entertainment", "88fFQcRe1CM");
+        (16, "Zombie Army 4: Dead War", "Zombie_Army_4__Dead_War_1x.jpg", "Third-person shooter, Survival horror, Tactical shooter", 9, "2020-02-04", "Rebellion Developments, Game Source Entertainment", "88fFQcRe1CM"),
+        (17, "Celeste", "Celeste_1x.jpg", "Platform Game", 9.2, "2018-01-25", "Matt Makes Games", "70d9irlxiB4"),
+        (18, "Ary and the Secret of Seasons", "ary_secretofseasons.jpg", "Action-Adventure game", "7", "2020-09-01", "Modus Games, Maximum Games", "p1F9gZzDKLI"),
+        (19, "Strange Brigade", "Strange_Brigade_1x.jpg", "Cooperative, Third-person shooter video game", "9", "2018-08-28", "Rebellion Developments", "f5Df508visY"),
+        (20, "Ghost Recon Breakpoint", "GhostReconBreakpoint_1x.jpg", "Online, Worldwide, Tactical shooter video game", "7.5", "2019-06-26", "Ubisoft, Nouredine Abboud ", "y-9_d3IT_yA"),
+        (21, "FIFA 20", "fifa20.jpg", "Football simulation video gamenre", "9.0", "2019-09-24", "Electronic Arts", "vgQNOIhRsV4");
 
 //------------------------------INSERT INTO PROGRAM---------------------------------
 INSERT INTO Program(PID, PName, PPoster, PReleasedDate, PPublisher) VALUES
@@ -63,8 +115,12 @@ INSERT INTO Program(PID, PName, PPoster, PReleasedDate, PPublisher) VALUES
         (12, "Visual Studio", "Visual-Studio-Logo.png", "2019-04-02", "Microsfot"),
         (13, "MATLAB", "matlab.png", "2020-09-17", "MathWorks"),
         (14, "Android Studio", "Andriod_studio.png", "2020-09-10", "Google"),
-        (15, "Cinema 4D", "Cinema-4D-Logo.png","2020-09-08", "Maxon");
-
+        (15, "Cinema 4D", "Cinema-4D-Logo.png","2020-09-08", "Maxon"),
+        (16, "OBS: Open Broadcaster Software", "obs.png", "2020-12-14", "Hugh 'Jim' Bailey"),
+        (17, "Intel Quartus Prime", "quartus.jpg", "2013-03-04", "Intel"),
+        (18, "Microsoft SQL Server ", "sql-server_logo.jpg", "2019-05-29", "Microsoft"),
+        (19, "Incspace", "incspace.png", "2005-07-03", "Nathan Hurst, Ted Gould"),
+        (20, "GIMP - GNU Image Manipulation Program", "gimp.png", "2019-02-12", "Spencer Kimball, Peter Mattis");
 
 
 

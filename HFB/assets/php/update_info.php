@@ -16,7 +16,7 @@
 
     function check_email($user_name, $email, $conn){  // -1=invalid and 0=notunique 1=correct
         if(strlen($email) <= 0 || strlen($email) > 20) return -1;
-        if(!preg_match("/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/", $email)) return -1;
+        if(!preg_match("/^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/", $email)) return -1;
         $sql = "SELECT `Email` from `Users` where `Email` = '".$email."' and `UserName` != '$user_name'";
         $result_set = mysqli_query($conn, $sql) or die("Database Error: ".mysqli_error($conn));
         if(mysqli_num_rows($result_set)) return 0;
@@ -58,12 +58,18 @@
                     $_SESSION['username'] = $user_name;
                     $_SESSION['password'] = $password;
                     echo "Successfully Updated :)";
-                    header('HTTP/1.1 301 Moved Permanently');
-                    header('Location: ../../profile.php');
                 }else{
                     echo "We've some problems, Try update later :(";
+                }
+                if($user_type == "normal"){
                     header('HTTP/1.1 301 Moved Permanently');
-                    header('Location: ../../profile.php');
+                    header('Location: ../../views/normal/profile.php'); 
+                }else if($user_type == "program_publisher"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/program_publisher/profile.php'); 
+                }else if($user_type == "game_publisher"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/game_publisher/profile.php'); 
                 }
             } 
         }          

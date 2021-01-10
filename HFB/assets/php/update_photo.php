@@ -33,7 +33,16 @@
         }
     }
 
-    header('HTTP/1.1 301 Moved Permanently');
-    header('Location: ../../profile.php');
+    $user_type = $_SESSION['type'];
+    if($user_type == "normal"){
+        header('HTTP/1.1 301 Moved Permanently');
+        header('Location: ../../views/normal/profile.php'); 
+    }else if($user_type == "program_publisher"){
+        header('HTTP/1.1 301 Moved Permanently');
+        header('Location: ../../views/program_publisher/profile.php'); 
+    }else if($user_type == "game_publisher"){
+        header('HTTP/1.1 301 Moved Permanently');
+        header('Location: ../../views/game_publisher/profile.php'); 
+    }
 
 ?>

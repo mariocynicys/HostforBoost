@@ -6,8 +6,16 @@
         $username = $_SESSION['username'];
         $password = $_SESSION['password'];
         if(make_check($username, $password) == 1){
-            header('HTTP/1.1 301 Moved Permanently');
-            header('Location: profile.php'); 
+            if($_SESSION['type'] == "normal"){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: views/normal/profile.php'); 
+            }else if($_SESSION['type'] == "program_publisher"){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: views/program_publisher/profile.php'); 
+            }else if($_SESSION['type'] == "game_publisher"){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: views/game_publisher/profile.php'); 
+            }
         }
     }
     
@@ -17,7 +25,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Login - Brand</title>
+    <title>Login - HFB</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather">

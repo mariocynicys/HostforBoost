@@ -20,7 +20,7 @@
 
     function check_email($email, $conn){  // -1=invalid and 0=notunique 1=correct
         if(strlen($email) <= 0 || strlen($email) > 20) return -1;
-        if(!preg_match("/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/", $email)) return -1;
+        if(!preg_match("/^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/", $email)) return -1;
         $sql = "SELECT `Email` from `Users` where `Email` = '".$email."'";
         $result_set = mysqli_query($conn, $sql) or die("Database Error: ".mysqli_error($conn));
         if(mysqli_num_rows($result_set)) return 0;
@@ -56,13 +56,21 @@
         }else{
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $sql = "INSERT INTO `Users`(`UserName`, `FirstName`, `LastName`, `Email`, `HashedPassword`, `UserType`, `IsOnline`) VALUES('$user_name','$first_name','$last_name','$email','$hashed_password','$user_type',1)";
-            echo $sql;
             if(mysqli_query($conn, $sql)){
                 $_SESSION['username'] = $user_name;
                 $_SESSION['password'] = $password;
+                $_SESSION['type'] = $user_type;
                 echo "Successfully Registered!, Welcome " .$user_name. " :)";
-                header('HTTP/1.1 301 Moved Permanently');
-                header('Location: ../../profile.php');
+                if($user_type == "normal"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/normal/profile.php'); 
+                }else if($user_type == "program_publisher"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/program_publisher/profile.php'); 
+                }else if($user_type == "game_publisher"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/game_publisher/profile.php'); 
+                }
             }else{
                 echo "We've some problems, Try regiter later :(";
                 header('HTTP/1.1 301 Moved Permanently');

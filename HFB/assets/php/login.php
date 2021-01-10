@@ -27,10 +27,26 @@
                 global $conn;
                 $sql = "UPDATE `users` SET `IsOnline` = '1' WHERE `users`.`UserName` = '$user_name'";
                 mysqli_query($conn, $sql);
+                
+                $sql = "SELECT UserType FROM users WHERE `users`.`UserName` = '$user_name'";
+                $result_set = mysqli_query($conn, $sql) or die("Database Error: " . mysqli_error($conn));
+                $record = mysqli_fetch_assoc($result_set);
+
                 $_SESSION['username'] = $user_name;
                 $_SESSION['password'] = $password;
-                header('HTTP/1.1 301 Moved Permanently');
-                header('Location: ..\..\profile.php');
+                $_SESSION['type'] = $record['UserType'];
+                
+                if($record['UserType'] == "normal"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/normal/profile.php'); 
+                }else if($record['UserType'] == "program_publisher"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/program_publisher/profile.php'); 
+                }else if($record['UserType'] == "game_publisher"){
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: ../../views/game_publisher/profile.php'); 
+                }
+
             }else{
                 $_SESSION = array();
                 session_destroy();
