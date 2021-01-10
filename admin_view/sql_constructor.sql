@@ -66,6 +66,22 @@ CREATE TABLE ProgramsHistory(
     CONSTRAINT `FK_UPHistory_2` FOREIGN KEY (`PID`)REFERENCES `Program` (`PID`) ON DELETE CASCADE
 )ENGINE = InnoDB;
 
+CREATE TABLE GamesPublishersHistory(
+    `UserName` VARCHAR (20) NOT NULL,
+    `GID` INT NOT NULL,
+    PRIMARY KEY (`UserName`, `GID`),
+    CONSTRAINT `FK_GPHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_GPHistory_2` FOREIGN KEY (`GID`)REFERENCES `Game` (`GID`) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE TABLE ProgramsPublishersHistory(
+    `UserName` VARCHAR (20) NOT NULL,
+    `PID` INT NOT NULL,
+    PRIMARY KEY (`UserName`, `PID`),
+    CONSTRAINT `FK_PPHistory_1` FOREIGN KEY (`UserName`) REFERENCES `Users` (`UserName`) ON DELETE CASCADE,
+    CONSTRAINT `FK_PPHistory_2` FOREIGN KEY (`PID`)REFERENCES `Program` (`PID`) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
 CREATE TABLE Administrators(
     USERNAME VARCHAR(20) PRIMARY KEY,
     PASSWORD VARCHAR(16) NOT NULL
@@ -124,3 +140,14 @@ INSERT INTO ProgramsHistory(UserName,PID) VALUES
 INSERT INTO GamesHistory(UserName,GID) VALUES
     ('meryacine',1),
     ('mario',12);
+
+INSERT INTO GamesPublishersHistory (UserName, GID)
+VALUES
+('meryacine',6),
+('mario',7);
+
+INSERT INTO ProgramsPublishersHistory (UserName, PID)
+VALUES (
+    'meryacine',
+    13),
+  ('mario',4);

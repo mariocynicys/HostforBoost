@@ -117,6 +117,25 @@ class ProgramHistory(Base):
         self.pstart = pstart
         self.pend = pend
         self.pstate = pstate
+        
+class GamePublishedBy(Base):
+    __tablename__ = "GamesPublishersHistory"
+    username = Column('UserName',String,primary_key=True)
+    gid = Column('GID',Integer,primary_key=True)
+    
+    def __init__(self,username,gid):
+        self.username = username
+        self.gid = gid
+        
+class ProgramPublishedBy(Base):
+    __tablename__ = "ProgramsPublishersHistory"
+    username = Column('UserName',String,primary_key=True)
+    pid = Column('PID',Integer,primary_key=True)
+    
+    def __init__(self,username,pid):
+        self.username = username
+        self.pid = pid
+        
 
 def admin_control():
     '''meh, admin control'''
@@ -218,9 +237,9 @@ def view_game_history(_ = 0):
     ttk.Label(scrollable_frame,text="User Name").grid(row=0,column=1,ipadx=5,ipady=1)
     ttk.Label(scrollable_frame,text="Game ID").grid(row=0,column=2,ipadx=5,ipady=1)
     ttk.Label(scrollable_frame,text="Game Name").grid(row=0,column=3,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Game State").grid(row=0,column=4,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=5,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=6,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game State").grid(row=0,column=6,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=7,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=8,ipadx=5,ipady=1)
     
     for i in range(len(history_list)):
         gamename="-UNKNOWN-"
@@ -233,9 +252,9 @@ def view_game_history(_ = 0):
         ttk.Label(scrollable_frame,text=history_list[i].username,).grid(row=i+1,column=1,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=history_list[i].gid,).grid(row=i+1,column=2,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=gamename,).grid(row=i+1,column=3,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].gstate,).grid(row=i+1,column=4,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].gstart,).grid(row=i+1,column=5,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].gend,).grid(row=i+1,column=6,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].gstate,).grid(row=i+1,column=6,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].gstart,).grid(row=i+1,column=7,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].gend,).grid(row=i+1,column=8,ipadx=5,ipady=1)
         
 def view_program_history(_ = 0):
     try:
@@ -268,9 +287,9 @@ def view_program_history(_ = 0):
     ttk.Label(scrollable_frame,text="User Name").grid(row=0,column=1,ipadx=5,ipady=1)
     ttk.Label(scrollable_frame,text="Program ID").grid(row=0,column=2,ipadx=5,ipady=1)
     ttk.Label(scrollable_frame,text="Program Name").grid(row=0,column=3,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Program State").grid(row=0,column=4,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=5,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=6,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program State").grid(row=0,column=6,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Start Time").grid(row=0,column=7,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="End Time").grid(row=0,column=8,ipadx=5,ipady=1)
     
     for i in range(len(history_list)):
         programname="-UNKNOWN-"
@@ -283,15 +302,15 @@ def view_program_history(_ = 0):
         ttk.Label(scrollable_frame,text=history_list[i].username,).grid(row=i+1,column=1,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=history_list[i].pid,).grid(row=i+1,column=2,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=programname,).grid(row=i+1,column=3,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].pstate,).grid(row=i+1,column=4,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].pstart,).grid(row=i+1,column=5,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=history_list[i].pend,).grid(row=i+1,column=6,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].pstate,).grid(row=i+1,column=6,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].pstart,).grid(row=i+1,column=7,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=history_list[i].pend,).grid(row=i+1,column=8,ipadx=5,ipady=1)
     
 def control_games(_ = 0):
     try:
         game_list = session.query(Game).order_by(Game.gid.asc()).all()
     except:
-        messagebox.showerror("Error","Couldn't Fetch The Game Table From The DB")
+        messagebox.showerror("Error","Couldn't Fetch The Games Table From The DB")
         session.rollback()
         return
     
@@ -316,21 +335,31 @@ def control_games(_ = 0):
     
     ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
     ttk.Label(scrollable_frame,text="Game Name").grid(row=0,column=1,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Publisher").grid(row=0,column=2,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Rate").grid(row=0,column=3,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Genre").grid(row=0,column=4,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Game Release Date").grid(row=0,column=5,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Game ID").grid(row=0,column=6,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Published By").grid(row=0,column=2,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Publisher Username").grid(row=0,column=3,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Rate").grid(row=0,column=4,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Genre").grid(row=0,column=5,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game Release Date").grid(row=0,column=6,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Game ID").grid(row=0,column=7,ipadx=5,ipady=1)
     
     for i in range(len(game_list)):
+        username = "-UNKNOWN-"
+        try:
+            gamepublishedby = session.query(GamePublishedBy).filter_by(gid=game_list[i].gid).first()
+            username = gamepublishedby.username
+        except:
+            session.rollback()
         ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=game_list[i].gname).grid(row=i+1,column=1,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=game_list[i].gpublisher).grid(row=i+1,column=2,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].grate).grid(row=i+1,column=3,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].ggenre).grid(row=i+1,column=4,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].greleaseddate).grid(row=i+1,column=5,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=game_list[i].gid).grid(row=i+1,column=6,ipadx=5,ipady=1)
-        ttk.Button(scrollable_frame,text="Remove",command=lambda gid=game_list[i].gid: remove_game(gid)).grid(row=i+1,column=7,ipadx=1,ipady=1)
+        ############################################################################col3
+        ttk.Label(scrollable_frame,text=username).grid(row=i+1,column=3,ipadx=5,ipady=1)
+        ############################################################################col3
+        ttk.Label(scrollable_frame,text=game_list[i].grate).grid(row=i+1,column=4,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].ggenre).grid(row=i+1,column=5,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].greleaseddate).grid(row=i+1,column=6,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=game_list[i].gid).grid(row=i+1,column=7,ipadx=5,ipady=1)
+        ttk.Button(scrollable_frame,text="Remove",command=lambda gid=game_list[i].gid: remove_game(gid)).grid(row=i+1,column=8,ipadx=1,ipady=1)
 
 def control_programs(_ = 0):
     try:
@@ -361,23 +390,33 @@ def control_programs(_ = 0):
     
     ttk.Label(scrollable_frame,text="index").grid(row=0,column=0,ipadx=5,ipady=1)
     ttk.Label(scrollable_frame,text="Program Name").grid(row=0,column=1,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Program Publisher").grid(row=0,column=2,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Program Release Date").grid(row=0,column=5,ipadx=5,ipady=1)
-    ttk.Label(scrollable_frame,text="Program ID").grid(row=0,column=6,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Publisher By").grid(row=0,column=2,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Publisher Username").grid(row=0,column=3,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program Release Date").grid(row=0,column=4,ipadx=5,ipady=1)
+    ttk.Label(scrollable_frame,text="Program ID").grid(row=0,column=5,ipadx=5,ipady=1)
     
     for i in range(len(program_list)):
+        username = "-UNKNOWN-"
+        try:
+            programpublishedby = session.query(ProgramPublishedBy).filter_by(pid=program_list[i].pid).first()
+            username = programpublishedby.username
+        except:
+            session.rollback()
         ttk.Label(scrollable_frame,text=i+1).grid(row=i+1,column=0,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=program_list[i].pname).grid(row=i+1,column=1,ipadx=5,ipady=1)
         ttk.Label(scrollable_frame,text=program_list[i].ppublisher).grid(row=i+1,column=2,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=program_list[i].preleaseddate).grid(row=i+1,column=5,ipadx=5,ipady=1)
-        ttk.Label(scrollable_frame,text=program_list[i].pid).grid(row=i+1,column=6,ipadx=5,ipady=1)
-        ttk.Button(scrollable_frame,text="Remove",command=lambda pid=program_list[i].pid: remove_program(pid)).grid(row=i+1,column=7,ipadx=1,ipady=1)
+        ######################################################################col3
+        ttk.Label(scrollable_frame,text=username).grid(row=i+1,column=3,ipadx=5,ipady=1)
+        ######################################################################col3
+        ttk.Label(scrollable_frame,text=program_list[i].preleaseddate).grid(row=i+1,column=4,ipadx=5,ipady=1)
+        ttk.Label(scrollable_frame,text=program_list[i].pid).grid(row=i+1,column=5,ipadx=5,ipady=1)
+        ttk.Button(scrollable_frame,text="Remove",command=lambda pid=program_list[i].pid: remove_program(pid)).grid(row=i+1,column=6,ipadx=1,ipady=1)
 
 def control_users(_ = 0):
     try:
         user_list = session.query(User).order_by(User.username.asc()).all()
     except:
-        messagebox.showerror("Error","Couldn't Fetch The Users Table From The DB")
+        messagebox.showerror("Error","Couldn't Fetch The Users' Table From The DB")
         session.rollback()
         return
     
@@ -625,14 +664,12 @@ def start():
     user_label.grid(row=2,column=0,padx=(60,0),pady=(20,0))
     
     user_input = ttk.Entry(window,)
-    #user_input.insert(0,'omar')
     user_input.grid(row=2,column=1,padx=(0,0),pady=(20,0))
 
     password_label = ttk.Label(window,text="Password : ")
     password_label.grid(row=3,column=0,padx=(60,0),pady=(20,0))
     
     password_input = ttk.Entry(window,show="\u25CF")
-    #password_input.insert(0,'0000') # comment this line after testing
     password_input.grid(row=3,column=1,padx=(0,0),pady=(20,0))
     
     connect = lambda dump = 0 : connect_db(host_input.get(),port_input.get(),user_input.get(),password_input.get()) 
@@ -647,9 +684,11 @@ def clear_window(window):
             widget.destroy()
             
 def logger(action,info):
+    log = '[{}] Admin:[{}] {} {}\n'.format(time.ctime(),USERNAME,action,info,)
     try:
         with open('log','a') as file:
-            file.write('[{}] Admin:[{}] {} {}\n'.format(time.ctime(),USERNAME,action,info,))
+            file.write(log)
+        print(log)
     except:
         pass
         
